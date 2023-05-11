@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.mjc.school'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    group = 'com.mjc.school'
+
+    sourceCompatibility = 17
+    targetCompatibility = 17
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web:3.0.3'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.0.3'
+        implementation 'org.postgresql:postgresql:42.6.0'
+
+        compileOnly 'org.projectlombok:lombok:1.18.26'
+        annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+        testCompileOnly 'org.projectlombok:lombok:1.18.26'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+
+    }
+    test {
+        useJUnitPlatform()
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+tasks.register('repack', Jar) {
+    dependsOn ':module-main:build'
+    if (findProject(':module-main') != null) {
+        entryCompression = ZipEntryCompression.STORED
+        def buildJar = zipTree("${project(':module-main').buildDir}/libs/module-main.jar")
+        from(buildJar) { into('/') }
+        manifest {
+            attributes(
+                    'Main-Class': 'com.mjc.school.Application'
+            )
+        }
+    }
+}
