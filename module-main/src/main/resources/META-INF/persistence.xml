@@ -1,0 +1,36 @@
+<persistence
+    version="2.1"
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+            http://xmlns.jcp.org/xml/ns/persistence_2_1.xsd">
+
+    <persistence-unit name="NewsManagement">
+        <class>com.mjc.school.repository.model.impl.AuthorModel</class>
+        <class>com.mjc.school.repository.model.impl.NewsModel</class>
+        <class>com.mjc.school.repository.model.impl.TagModel</class>
+        <class>com.mjc.school.repository.model.impl.CommentModel</class>
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/newsdb"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="postgres"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+<!--            <property-->
+<!--                    name="javax.persistence.schema-generation.database.action"-->
+<!--                    value="drop-and-create"/>-->
+
+            <property name="hibernate.format_sql" value="true"/>
+
+            <property name="hibernate.use_sql_comments" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
