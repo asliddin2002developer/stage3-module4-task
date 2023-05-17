@@ -15,13 +15,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/all-news")
-public class NewsContoller implements BaseController<NewsDTORequest, NewsDTOResponse, Long> {
+public class NewsController implements BaseController<NewsDTORequest, NewsDTOResponse, Long> {
     private final BaseService<NewsDTORequest, NewsDTOResponse, Long> model;
     private final View<NewsDTOResponse, List<NewsDTOResponse>> view;
 
     @Autowired
-    public NewsContoller(BaseService<NewsDTORequest, NewsDTOResponse, Long> model,
-                         View<NewsDTOResponse, List<NewsDTOResponse>> view) {
+    public NewsController(BaseService<NewsDTORequest, NewsDTOResponse, Long> model,
+                          View<NewsDTOResponse, List<NewsDTOResponse>> view) {
         this.model = model;
         this.view = view;
     }
@@ -44,26 +44,29 @@ public class NewsContoller implements BaseController<NewsDTORequest, NewsDTOResp
     }
 
     @PostMapping("/news/create")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<NewsDTOResponse> create(@RequestBody NewsDTORequest createRequest) {
         var newsDTOResponse = model.create(createRequest);
         view.display(newsDTOResponse);
         return new ResponseEntity<>(newsDTOResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping("/news/update")
-    public ResponseEntity<NewsDTOResponse> update(@RequestBody(required = false) NewsDTORequest updateRequest) {
+    @PutMapping("/news/update/{id}")
+    public ResponseEntity<NewsDTOResponse> update(@PathVariable Long id,
+                                                  @RequestBody NewsDTORequest updateRequest) {
         var newsDTOResponse = model.update(updateRequest);
         view.display(newsDTOResponse);
         return new ResponseEntity<>(newsDTOResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/news/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
-        boolean resp = model.deleteById(id);
-        return new ResponseEntity<>(resp, HttpStatus.NO_CONTENT);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        model.deleteById(id);
     }
 
-    public ResponseEntity<List<NewsDTOResponse>> getNewsByParams(NewsParamsRequest newsParamsRequest){
+    @GetMapping("/news/params")
+    public ResponseEntity<List<NewsDTOResponse>> getNewsByParams(@RequestBody NewsParamsRequest newsParamsRequest){
         List<NewsDTOResponse> newsDTORespons = model.getNewsByParams(newsParamsRequest);
         view.displayAll(newsDTORespons);
         return new ResponseEntity<>(newsDTORespons, HttpStatus.OK);

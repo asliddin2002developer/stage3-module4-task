@@ -45,6 +45,7 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
 
     @Override
     @PostMapping("/tag/create")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<TagDTOResponse> create(@RequestBody TagDTORequest createRequest) {
         var tagDTOResponse = model.create(createRequest);
         view.display(tagDTOResponse);
@@ -52,8 +53,9 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
     }
 
     @Override
-    @PutMapping("/tag/update")
-    public ResponseEntity<TagDTOResponse> update(@RequestBody TagDTORequest updateRequest) {
+    @PutMapping("/tag/update/{id}")
+    public ResponseEntity<TagDTOResponse> update(@PathVariable Long id,
+                                                 @RequestBody TagDTORequest updateRequest) {
         var tagDTOResponse = model.update(updateRequest);
         view.display(tagDTOResponse);
         return new ResponseEntity<>(tagDTOResponse, HttpStatus.OK);
@@ -61,10 +63,9 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
 
     @Override
     @DeleteMapping("/tag/delete/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
-        var resp = model.deleteById(id);
-        System.out.println(resp);
-        return new ResponseEntity<>(resp, HttpStatus.NO_CONTENT);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        model.deleteById(id);
     }
     @Override
     @GetMapping("/tag/news/{id}")

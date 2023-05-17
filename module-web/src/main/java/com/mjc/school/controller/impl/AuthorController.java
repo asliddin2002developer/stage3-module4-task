@@ -46,6 +46,7 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
 
     @Override
     @PostMapping("/author/create")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<AuthorDTOResponse> create(@RequestBody AuthorDTORequest createRequest) {
         var authorDTOResponse = model.create(createRequest);
         view.display(authorDTOResponse);
@@ -53,8 +54,9 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
     }
 
     @Override
-    @PutMapping("/author/update")
-    public ResponseEntity<AuthorDTOResponse> update(@RequestBody AuthorDTORequest updateRequest) {
+    @PutMapping("/author/update/{id}")
+    public ResponseEntity<AuthorDTOResponse> update(@PathVariable Long id,
+                                                    @RequestBody AuthorDTORequest updateRequest) {
         var authorDTOResponse = model.update(updateRequest);
         view.display(authorDTOResponse);
         return new ResponseEntity<>(authorDTOResponse, HttpStatus.OK);
@@ -62,10 +64,10 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
 
     @Override
     @DeleteMapping("/author/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
-        var resp = model.deleteById(id);
-        System.out.println(resp);
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        model.deleteById(id);
+
     }
 
     @Override
@@ -73,6 +75,6 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
     public ResponseEntity<AuthorDTOResponse> getAuthorByNewsId(@PathVariable Long id) {
         var resp = model.getAuthorByNewsId(id);
         view.display(resp);
-        return new ResponseEntity<>(resp, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }

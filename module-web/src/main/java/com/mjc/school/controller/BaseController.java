@@ -23,10 +23,10 @@ public interface BaseController<T, R, K> {
     ResponseEntity<R> create(@CommandBody T createRequest);
 
     @CommandHandler
-    ResponseEntity<R> update(@CommandBody T updateRequest);
+    ResponseEntity<R> update(@CommandParam("id") K id, @CommandBody T updateRequest);
 
     @CommandHandler
-    ResponseEntity<Boolean> deleteById(@CommandParam("id") K id);
+    void deleteById(@CommandParam("id") K id);
     @CommandHandler
     default ResponseEntity<AuthorDTOResponse> getAuthorByNewsId(@CommandParam("newsId") Long newsId){
         // Default implementation that throws an UnsupportedOperationException

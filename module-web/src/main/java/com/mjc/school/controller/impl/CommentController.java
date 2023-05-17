@@ -54,6 +54,7 @@ public class CommentController implements BaseController<CommentDTORequest, Comm
 
     @Override
     @PostMapping("/comment/create")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<CommentDTOResponse> create(@RequestBody CommentDTORequest createRequest) {
         var commentDTOResponse = model.create(createRequest);
         view.display(commentDTOResponse);
@@ -61,16 +62,19 @@ public class CommentController implements BaseController<CommentDTORequest, Comm
     }
 
     @Override
-    @PutMapping("/comment/update")
-    public ResponseEntity<CommentDTOResponse> update(@RequestBody CommentDTORequest updateRequest) {
+    @PutMapping("/comment/update/{id}")
+    public ResponseEntity<CommentDTOResponse> update(@PathVariable Long id,
+                                                     @RequestBody CommentDTORequest updateRequest) {
         var commentDTOResponse = model.update(updateRequest);
         view.display(commentDTOResponse);
         return new ResponseEntity<>(commentDTOResponse, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Boolean> deleteById(Long id) {
-        var deleted = model.deleteById(id);
-        return new ResponseEntity<>(deleted, HttpStatus.NO_CONTENT);
+    @DeleteMapping("/comment/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        model.deleteById(id);
+
     }
 }
