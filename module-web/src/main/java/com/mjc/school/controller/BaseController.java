@@ -3,10 +3,7 @@ package com.mjc.school.controller;
 import com.mjc.school.controller.annotations.CommandBody;
 import com.mjc.school.controller.annotations.CommandHandler;
 import com.mjc.school.controller.annotations.CommandParam;
-import com.mjc.school.service.dto.AuthorDTOResponse;
-import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsParamsRequest;
-import com.mjc.school.service.dto.TagDTOResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

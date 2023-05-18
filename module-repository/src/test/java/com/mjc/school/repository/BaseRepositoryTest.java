@@ -1,9 +1,5 @@
 package com.mjc.school.repository;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -11,6 +7,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringJUnitConfig(classes = ConfigureTestDatabase.class)

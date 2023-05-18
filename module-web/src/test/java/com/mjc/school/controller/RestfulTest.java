@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 
 
 public class RestfulTest {

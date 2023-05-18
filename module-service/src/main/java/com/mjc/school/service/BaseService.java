@@ -1,9 +1,6 @@
 package com.mjc.school.service;
 
-import com.mjc.school.service.dto.AuthorDTOResponse;
-import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsParamsRequest;
-import com.mjc.school.service.dto.TagDTOResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

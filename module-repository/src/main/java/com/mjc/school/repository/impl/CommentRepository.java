@@ -3,7 +3,6 @@ package com.mjc.school.repository.impl;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.impl.CommentModel;
 import com.mjc.school.repository.model.impl.NewsModel;
-import com.mjc.school.repository.model.impl.TagModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
