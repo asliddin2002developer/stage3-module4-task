@@ -78,4 +78,9 @@ public class CommentService implements BaseService<CommentDTORequest, CommentDTO
                 )
         );
     }
+
+    public List<CommentDTOResponse> getCommentsByNewsId(Long id){
+        List<CommentModel> commentssByNewsId = commentRepository.getCommentssByNewsId(id);
+        return mapper.modelListToDtoList(commentssByNewsId);
+    }
 }

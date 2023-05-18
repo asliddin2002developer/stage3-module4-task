@@ -26,15 +26,19 @@ public interface BaseRepository<T extends BaseEntity<K>, K> {
     Optional<T> getReference(K id);
 
 
-    default AuthorModel getAuthorByNewsId(Long newsId){
+    default T getAuthorByNewsId(K id){
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }
-    default List<TagModel> getTagsByNewsId(Long newsId){
+    default List<T> getTagsByNewsId(K id){
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }
-    default List<NewsModel> getNewsByParams(NewsParams params) {
+    default List<T> getCommentssByNewsId(K id){
+        // Default implementation that throws an UnsupportedOperationException
+        throw new UnsupportedOperationException("Method not implemented");
+    }
+    default List<T> getNewsByParams(NewsParams params) {
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }

@@ -21,15 +21,19 @@ public interface BaseService<T, R, K> {
     boolean deleteById(K id);
     R getReference(K id);
 
-    default AuthorDTOResponse getAuthorByNewsId(Long newsId){
+    default R getAuthorByNewsId(K id){
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }
-    default List<TagDTOResponse> getTagsByNewsId(java.lang.Long newsId){
+    default List<R> getTagsByNewsId(K id){
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }
-    default List<NewsDTOResponse> getNewsByParams(NewsParamsRequest params) {
+    default List<R> getCommentsByNewsId(K id){
+        // Default implementation that throws an UnsupportedOperationException
+        throw new UnsupportedOperationException("Method not implemented");
+    }
+    default List<R> getNewsByParams(NewsParamsRequest params) {
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }

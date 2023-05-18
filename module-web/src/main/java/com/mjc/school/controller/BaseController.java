@@ -28,17 +28,22 @@ public interface BaseController<T, R, K> {
     @CommandHandler
     void deleteById(@CommandParam("id") K id);
     @CommandHandler
-    default ResponseEntity<AuthorDTOResponse> getAuthorByNewsId(@CommandParam("newsId") Long newsId){
+    default ResponseEntity<R> getAuthorByNewsId(@CommandParam("newsId") Long newsId){
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }
     @CommandHandler
-    default ResponseEntity<List<TagDTOResponse>> getTagsByNewsId(@CommandParam("newsId") java.lang.Long newsId){
+    default ResponseEntity<List<R>> getTagsByNewsId(@CommandParam("newsId") Long newsId){
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }
     @CommandHandler
-    default ResponseEntity<List<NewsDTOResponse>> getNewsByParams(@CommandBody NewsParamsRequest params) {
+    default ResponseEntity<List<R>> getCommentsByNewsId(@CommandParam("newsId") Long newsId){
+        // Default implementation that throws an UnsupportedOperationException
+        throw new UnsupportedOperationException("Method not implemented");
+    }
+    @CommandHandler
+    default ResponseEntity<List<R>> getNewsByParams(@CommandBody NewsParamsRequest params) {
         // Default implementation that throws an UnsupportedOperationException
         throw new UnsupportedOperationException("Method not implemented");
     }

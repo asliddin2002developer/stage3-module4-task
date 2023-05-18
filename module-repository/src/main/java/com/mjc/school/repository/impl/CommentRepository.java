@@ -2,6 +2,8 @@ package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.impl.CommentModel;
+import com.mjc.school.repository.model.impl.NewsModel;
+import com.mjc.school.repository.model.impl.TagModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
@@ -95,5 +98,14 @@ public class CommentRepository implements BaseRepository<CommentModel, Long> {
     @Override
     public Optional<CommentModel> getReference(Long id) {
         return Optional.ofNullable(entityManager.getReference(CommentModel.class, id));
+    }
+
+    public List<CommentModel> getCommentsByNewsId(Long id){
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CommentModel> query = builder.createQuery(CommentModel.class);
+        Root<NewsModel> root = query.from(NewsModel.class);
+        Join<NewsModel, CommentModel> join = root.join("comments");
+        query.select(join).where(builder.equal(root.get("id"), id));
+        return entityManager.createQuery(query).getResultList();
     }
 }
