@@ -70,8 +70,8 @@ public class NewsRepository  implements BaseRepository<NewsModel, Long> {
             return entity;
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+            throw e;
         }
-        throw new RuntimeException("Action failed");
     }
     @Override
     public NewsModel update(NewsModel entity) {

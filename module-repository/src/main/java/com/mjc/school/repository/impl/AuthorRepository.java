@@ -70,8 +70,8 @@ public class AuthorRepository implements BaseRepository<AuthorModel, Long> {
             return getReference(entity.getId()).get();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
+            throw e;
         }
-        throw new UnsupportedOperationException("Creating Author entity failed");
     }
 
     @Override

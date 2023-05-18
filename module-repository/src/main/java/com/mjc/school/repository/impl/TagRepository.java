@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -38,11 +37,10 @@ public class TagRepository implements BaseRepository<TagModel, Long> {
         String jpql = String.format(
                 "FROM TagModel nm ORDER BY nm.%s %s", sortParams[0], (sortParams.length > 1) ? sortParams[1] : ""
         );
-        Query query = entityManager.createQuery(jpql)
+        return entityManager.createQuery(jpql)
                 .setMaxResults(size)
-                .setFirstResult(page * size);
-
-        return query.getResultList();
+                .setFirstResult(page * size)
+                .getResultList();
     }
 
     @Override
@@ -59,8 +57,8 @@ public class TagRepository implements BaseRepository<TagModel, Long> {
             return entity;
         }catch (Exception e){
             entityManager.getTransaction().rollback();
+            throw e;
         }
-        throw new UnsupportedOperationException("Creating Tag entity failed");
     }
 
     @Override

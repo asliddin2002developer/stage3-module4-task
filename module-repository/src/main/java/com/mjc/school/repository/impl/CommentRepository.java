@@ -64,8 +64,8 @@ public class CommentRepository implements BaseRepository<CommentModel, Long> {
             return getReference(entity.getId()).get();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
+            throw e;
         }
-        throw new UnsupportedOperationException("Persisting instance comment failed");
     }
 
     @Override
