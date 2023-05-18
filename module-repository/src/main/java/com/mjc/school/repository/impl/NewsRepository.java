@@ -87,9 +87,9 @@ public class NewsRepository  implements BaseRepository<NewsModel, Long> {
         NewsModel news = entityManager.find(NewsModel.class, id);
 
          //   get all tags that news has alone
-         Query q = entityManager.createNativeQuery("SELECT nt.tag_id FROM newstag nt " +
+         Query q = entityManager.createNativeQuery("SELECT nt.tag_id FROM News_Tag nt " +
                                                                          "JOIN tag t ON nt.tag_id = t.id " +
-                                                                         "JOIN newstag nt2 ON t.id = nt2.tag_id " +
+                                                                         "JOIN News_Tag nt2 ON t.id = nt2.tag_id " +
                                                                          "WHERE nt2.news_id = ? " +
                                                                          "GROUP BY nt.tag_id " +
                                                                         "HAVING COUNT(nt.news_id) = 1");
@@ -97,7 +97,7 @@ public class NewsRepository  implements BaseRepository<NewsModel, Long> {
          List<Long> tagIds = (List<Long>) q.getResultList();
 
         // remove all associations for this news
-        q = entityManager.createNativeQuery("DELETE FROM newstag nt " +
+        q = entityManager.createNativeQuery("DELETE FROM News_Tag nt " +
                                                         "WHERE nt.news_id = :id");
         q.setParameter("id", news.getId());
         q.executeUpdate();

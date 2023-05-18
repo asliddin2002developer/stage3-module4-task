@@ -36,7 +36,7 @@ public class TagRepository implements BaseRepository<TagModel, Long> {
     public List<TagModel> readAll(int page, int size, String sortBy) {
         String[] sortParams = sortBy.split("::");
         String jpql = String.format(
-                "FROM Tag nm ORDER BY nm.%s %s", sortParams[0], (sortParams.length > 1) ? sortParams[1] : ""
+                "FROM TagModel nm ORDER BY nm.%s %s", sortParams[0], (sortParams.length > 1) ? sortParams[1] : ""
         );
         Query query = entityManager.createQuery(jpql)
                 .setMaxResults(size)

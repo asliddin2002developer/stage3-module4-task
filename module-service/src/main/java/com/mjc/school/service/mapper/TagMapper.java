@@ -16,5 +16,6 @@ public interface TagMapper {
 
     // when we have @ManyToMany relationship inside TagModel
 //    @Mapping(target = "news", ignore = true)
+    @Mapping(target = "news", ignore = true)
     TagModel dtoToModel(TagDTORequest request);
 }
