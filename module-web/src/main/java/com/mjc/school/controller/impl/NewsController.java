@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/all-news")
+@RequestMapping("/api/v1/news")
 public class NewsController implements BaseController<NewsDTORequest, NewsDTOResponse, Long> {
     private final BaseService<NewsDTORequest, NewsDTOResponse, Long> model;
     private final View<NewsDTOResponse, List<NewsDTOResponse>> view;
@@ -36,22 +36,22 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
     }
 
 
-    @GetMapping("/news/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<NewsDTOResponse> readById(@PathVariable("id") Long id) {
         var newsDTOResponse = model.readById(id);
         view.display(newsDTOResponse);
         return new ResponseEntity<>(newsDTOResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/news/create")
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<NewsDTOResponse> create(@RequestBody NewsDTORequest createRequest) {
         var newsDTOResponse = model.create(createRequest);
         view.display(newsDTOResponse);
         return new ResponseEntity<>(newsDTOResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping("/news/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<NewsDTOResponse> update(@PathVariable Long id,
                                                   @RequestBody NewsDTORequest updateRequest) {
         var newsDTOResponse = model.update(updateRequest);
@@ -59,14 +59,22 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
         return new ResponseEntity<>(newsDTOResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/news/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) {
         model.deleteById(id);
     }
 
-    @GetMapping("/news/params")
-    public ResponseEntity<List<NewsDTOResponse>> getNewsByParams(@RequestBody NewsParamsRequest newsParamsRequest){
+    @GetMapping("/search")
+    public ResponseEntity<List<NewsDTOResponse>> searchNews(@RequestParam(value = "title", required = false) String title,
+                                                            @RequestParam(value = "author", required = false) String author,
+                                                            @RequestParam(value = "content", required = false) String content,
+                                                            @RequestParam(value = "tagIds", required = false) List<Long> tagIds,
+                                                            @RequestParam(value = "tagNames", required = false) List<String> tagNames,
+                                                            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                                            @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                                            @RequestParam(value = "sort_by", required = false, defaultValue = "title") String sortBy) {
+        NewsParamsRequest newsParamsRequest = new NewsParamsRequest(author, title, content, tagIds, tagNames);
         List<NewsDTOResponse> newsDTORespons = model.getNewsByParams(newsParamsRequest);
         view.displayAll(newsDTORespons);
         return new ResponseEntity<>(newsDTORespons, HttpStatus.OK);

@@ -41,7 +41,7 @@ public class CommentController implements BaseController<CommentDTORequest, Comm
     }
 
     @Override
-    @GetMapping("/comment/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CommentDTOResponse> readById(@PathVariable Long id) {
         var commentDTOResponse = this.model.readById(id);
 //        if (commentDTOResponse == null){
@@ -53,7 +53,7 @@ public class CommentController implements BaseController<CommentDTORequest, Comm
     }
 
     @Override
-    @PostMapping("/comment/create")
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<CommentDTOResponse> create(@RequestBody CommentDTORequest createRequest) {
         var commentDTOResponse = model.create(createRequest);
@@ -62,7 +62,7 @@ public class CommentController implements BaseController<CommentDTORequest, Comm
     }
 
     @Override
-    @PutMapping("/comment/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<CommentDTOResponse> update(@PathVariable Long id,
                                                      @RequestBody CommentDTORequest updateRequest) {
         var commentDTOResponse = model.update(updateRequest);
@@ -71,10 +71,16 @@ public class CommentController implements BaseController<CommentDTORequest, Comm
     }
 
     @Override
-    @DeleteMapping("/comment/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) {
         model.deleteById(id);
 
+    }
+    @GetMapping("/news/{id}")
+    public ResponseEntity<List<CommentDTOResponse>> getCommentsByNewsId(@PathVariable Long id){
+        List<CommentDTOResponse> commentsByNewsId = model.getCommentsByNewsId(id);
+        view.displayAll(commentsByNewsId);
+        return new ResponseEntity<>(commentsByNewsId, HttpStatus.OK);
     }
 }

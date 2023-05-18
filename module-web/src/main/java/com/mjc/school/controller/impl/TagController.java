@@ -36,7 +36,7 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
     @Override
-    @GetMapping("/tag/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TagDTOResponse> readById(@PathVariable Long id) {
         var tagDTOResponse = model.readById(id);
         view.display(tagDTOResponse);
@@ -44,7 +44,7 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
     }
 
     @Override
-    @PostMapping("/tag/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<TagDTOResponse> create(@RequestBody TagDTORequest createRequest) {
         var tagDTOResponse = model.create(createRequest);
@@ -53,7 +53,7 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
     }
 
     @Override
-    @PutMapping("/tag/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<TagDTOResponse> update(@PathVariable Long id,
                                                  @RequestBody TagDTORequest updateRequest) {
         var tagDTOResponse = model.update(updateRequest);
@@ -62,13 +62,13 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
     }
 
     @Override
-    @DeleteMapping("/tag/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) {
         model.deleteById(id);
     }
     @Override
-    @GetMapping("/tag/news/{id}")
+    @GetMapping("/news/{id}")
     public ResponseEntity<List<TagDTOResponse>> getTagsByNewsId(@PathVariable Long id) {
         var tags = model.getTagsByNewsId(id);
         view.displayAll(tags);

@@ -37,7 +37,7 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
     }
 
     @Override
-    @GetMapping("/author/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<AuthorDTOResponse> readById(@PathVariable Long id) {
         var authorDTOResponse = model.readById(id);
         view.display(authorDTOResponse);
@@ -45,7 +45,7 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
     }
 
     @Override
-    @PostMapping("/author/create")
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<AuthorDTOResponse> create(@RequestBody AuthorDTORequest createRequest) {
         var authorDTOResponse = model.create(createRequest);
@@ -54,7 +54,7 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
     }
 
     @Override
-    @PutMapping("/author/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<AuthorDTOResponse> update(@PathVariable Long id,
                                                     @RequestBody AuthorDTORequest updateRequest) {
         var authorDTOResponse = model.update(updateRequest);
@@ -63,7 +63,7 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
     }
 
     @Override
-    @DeleteMapping("/author/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) {
         model.deleteById(id);
@@ -71,7 +71,7 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
     }
 
     @Override
-    @GetMapping("/author/newsId/{id}")
+    @GetMapping("/news/{id}")
     public ResponseEntity<AuthorDTOResponse> getAuthorByNewsId(@PathVariable Long id) {
         var resp = model.getAuthorByNewsId(id);
         view.display(resp);
