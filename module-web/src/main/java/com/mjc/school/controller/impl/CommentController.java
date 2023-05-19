@@ -1,7 +1,7 @@
 package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.BaseController;
-import com.mjc.school.service.BaseService;
+import com.mjc.school.service.CommentService;
 import com.mjc.school.service.dto.CommentDTORequest;
 import com.mjc.school.service.dto.CommentDTOResponse;
 import com.mjc.school.service.view.View;
@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("/api/v1/comments")
 public class CommentController implements BaseController<CommentDTORequest, CommentDTOResponse, Long> {
 
-    private final BaseService<CommentDTORequest, CommentDTOResponse, Long> model;
+    private final CommentService model;
     private final View<CommentDTOResponse, List<CommentDTOResponse>> view;
 
     @Autowired
-    public CommentController(BaseService<CommentDTORequest, CommentDTOResponse, Long> model,
+    public CommentController(CommentService model,
                              View<CommentDTOResponse, List<CommentDTOResponse>> view) {
         this.model = model;
         this.view = view;
@@ -79,7 +79,7 @@ public class CommentController implements BaseController<CommentDTORequest, Comm
     }
     @GetMapping("/news/{id}")
     public ResponseEntity<List<CommentDTOResponse>> getCommentsByNewsId(@PathVariable Long id){
-        List<CommentDTOResponse> commentsByNewsId = model.getCommentsByNewsId(id);
+        List<CommentDTOResponse> commentsByNewsId = model.readByNewsId(id);
         view.displayAll(commentsByNewsId);
         return new ResponseEntity<>(commentsByNewsId, HttpStatus.OK);
     }

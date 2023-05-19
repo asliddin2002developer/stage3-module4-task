@@ -1,7 +1,7 @@
 package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.BaseController;
-import com.mjc.school.service.BaseService;
+import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.NewsDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsParamsRequest;
@@ -16,11 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/news")
 public class NewsController implements BaseController<NewsDTORequest, NewsDTOResponse, Long> {
-    private final BaseService<NewsDTORequest, NewsDTOResponse, Long> model;
+    private final NewsService model;
     private final View<NewsDTOResponse, List<NewsDTOResponse>> view;
 
     @Autowired
-    public NewsController(BaseService<NewsDTORequest, NewsDTOResponse, Long> model,
+    public NewsController(NewsService model,
                           View<NewsDTOResponse, List<NewsDTOResponse>> view) {
         this.model = model;
         this.view = view;
@@ -75,7 +75,7 @@ public class NewsController implements BaseController<NewsDTORequest, NewsDTORes
                                                             @RequestParam(value = "size", required = false, defaultValue = "5") int size,
                                                             @RequestParam(value = "sort_by", required = false, defaultValue = "title") String sortBy) {
         NewsParamsRequest newsParamsRequest = new NewsParamsRequest(author, title, content, tagIds, tagNames);
-        List<NewsDTOResponse> newsDTORespons = model.getNewsByParams(newsParamsRequest);
+        List<NewsDTOResponse> newsDTORespons = model.readByQueryParams(newsParamsRequest);
         view.displayAll(newsDTORespons);
         return new ResponseEntity<>(newsDTORespons, HttpStatus.OK);
     }

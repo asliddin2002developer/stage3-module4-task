@@ -1,7 +1,7 @@
 package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.BaseController;
-import com.mjc.school.service.BaseService;
+import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
 import com.mjc.school.service.view.View;
@@ -15,11 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/authors")
 public class AuthorController implements BaseController<AuthorDTORequest, AuthorDTOResponse, Long> {
-    private final BaseService<AuthorDTORequest, AuthorDTOResponse, Long> model;
+    private final AuthorService model;
     private final View<AuthorDTOResponse, List<AuthorDTOResponse>> view;
 
     @Autowired
-    public AuthorController(BaseService<AuthorDTORequest, AuthorDTOResponse, Long> model,
+    public AuthorController(AuthorService model,
                             View<AuthorDTOResponse, List<AuthorDTOResponse>> view) {
         this.model = model;
         this.view = view;
@@ -70,10 +70,9 @@ public class AuthorController implements BaseController<AuthorDTORequest, Author
 
     }
 
-    @Override
     @GetMapping("/news/{id}")
     public ResponseEntity<AuthorDTOResponse> getAuthorByNewsId(@PathVariable Long id) {
-        var resp = model.getAuthorByNewsId(id);
+        var resp = model.readByNewsId(id);
         view.display(resp);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }

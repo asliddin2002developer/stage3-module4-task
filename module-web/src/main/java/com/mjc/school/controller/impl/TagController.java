@@ -1,7 +1,7 @@
 package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.BaseController;
-import com.mjc.school.service.BaseService;
+import com.mjc.school.service.TagService;
 import com.mjc.school.service.dto.TagDTORequest;
 import com.mjc.school.service.dto.TagDTOResponse;
 import com.mjc.school.service.view.View;
@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("/api/v1/tags")
 public class TagController implements BaseController<TagDTORequest, TagDTOResponse, Long> {
 
-    private final BaseService<TagDTORequest, TagDTOResponse, Long> model;
+    private final TagService model;
     private final View<TagDTOResponse, List<TagDTOResponse>> view;
 
     @Autowired
-    public TagController(BaseService<TagDTORequest, TagDTOResponse, Long> model,
+    public TagController(TagService model,
                          View<TagDTOResponse, List<TagDTOResponse>> view) {
         this.model = model;
         this.view = view;
@@ -67,10 +67,11 @@ public class TagController implements BaseController<TagDTORequest, TagDTORespon
     public void deleteById(@PathVariable Long id) {
         model.deleteById(id);
     }
-    @Override
+
+
     @GetMapping("/news/{id}")
     public ResponseEntity<List<TagDTOResponse>> getTagsByNewsId(@PathVariable Long id) {
-        var tags = model.getTagsByNewsId(id);
+        var tags = model.readByNewsId(id);
         view.displayAll(tags);
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
