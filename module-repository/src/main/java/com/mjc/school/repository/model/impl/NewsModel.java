@@ -52,7 +52,7 @@ public class NewsModel implements BaseEntity<Long> {
     @OneToMany(mappedBy = "news", fetch = FetchType.LAZY)
 //    @org.hibernate.annotations.BatchSize(size = 20)  // uses IN in sql query to overcome n + 1 query problem
     @org.hibernate.annotations.Fetch(FetchMode.SUBSELECT) // uses subselect
-    private Set<CommentModel> comments;
+    private Set<CommentModel> comments = new HashSet<>();
 
     @ManyToMany
 //    @org.hibernate.annotations.BatchSize(size = 20)
@@ -72,6 +72,10 @@ public class NewsModel implements BaseEntity<Long> {
 
     public void addTags(TagModel tag){
         this.tags.add(tag);
+    }
+
+    public void addComments(CommentModel commment){
+        this.comments.add(commment);
     }
 
     @Override

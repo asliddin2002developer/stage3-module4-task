@@ -11,7 +11,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,6 +38,9 @@ public class AuthorModel implements BaseEntity<Long> {
     @LastModifiedDate
     @Column(name = "Last_Update_Date", nullable = false)
     private LocalDateTime lastUpdateDate;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<NewsModel> news;
 
 
     public AuthorModel(String name){
