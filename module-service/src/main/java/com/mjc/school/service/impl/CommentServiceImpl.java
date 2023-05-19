@@ -1,8 +1,9 @@
 package com.mjc.school.service.impl;
 
-import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.CommentRepository;
+import com.mjc.school.repository.impl.CommentRepositoryImpl;
 import com.mjc.school.repository.model.impl.CommentModel;
-import com.mjc.school.service.BaseService;
+import com.mjc.school.service.CommentService;
 import com.mjc.school.service.dto.CommentDTORequest;
 import com.mjc.school.service.dto.CommentDTOResponse;
 import com.mjc.school.service.exception.NotFoundException;
@@ -17,13 +18,13 @@ import java.util.Optional;
 import static com.mjc.school.service.enums.ConstantValidators.ENTITY_NOT_FOUND_MESSAGE;
 
 @Service
-public class CommentService implements BaseService<CommentDTORequest, CommentDTOResponse, Long> {
-    private BaseRepository<CommentModel, Long> commentRepository;
-    private CommentMapper mapper;
-    private String entityName = "Comment";
+public class CommentServiceImpl implements CommentService {
+    private final CommentRepository commentRepository;
+    private final CommentMapper mapper;
+    private final String entityName = "Comment";
 
     @Autowired
-    public CommentService(BaseRepository<CommentModel, Long> commentRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
         this.mapper = Mappers.getMapper(CommentMapper.class);
     }
@@ -79,8 +80,9 @@ public class CommentService implements BaseService<CommentDTORequest, CommentDTO
         );
     }
 
-    public List<CommentDTOResponse> getCommentsByNewsId(Long id){
-        List<CommentModel> commentssByNewsId = commentRepository.getCommentssByNewsId(id);
+    @Override
+    public List<CommentDTOResponse> readByNewsId(Long id){
+        List<CommentModel> commentssByNewsId = commentRepository.readByNewsId(id);
         return mapper.modelListToDtoList(commentssByNewsId);
     }
 }

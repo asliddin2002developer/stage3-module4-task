@@ -1,8 +1,8 @@
 package com.mjc.school.service.impl;
 
-import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.TagRepository;
+import com.mjc.school.repository.impl.TagRepositoryImpl;
 import com.mjc.school.repository.model.impl.TagModel;
-import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.TagDTORequest;
 import com.mjc.school.service.dto.TagDTOResponse;
 import com.mjc.school.service.exception.NotFoundException;
@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 import static com.mjc.school.service.enums.ConstantValidators.ENTITY_NOT_FOUND_MESSAGE;
 
 @Service
-public class TagService implements BaseService<TagDTORequest, TagDTOResponse, Long> {
-    private final BaseRepository<TagModel, Long> tagRepository;
+public class TagServiceImpl implements com.mjc.school.service.TagService {
+    private final TagRepository tagRepository;
     private final TagMapper mapper;
-    private String entityName = "Tag";
+    private final String entityName = "Tag";
 
     @Autowired
-    public TagService(BaseRepository<TagModel, Long> tagRepository) {
+    public TagServiceImpl(TagRepositoryImpl tagRepository) {
         this.tagRepository = tagRepository;
         this.mapper = Mappers.getMapper(TagMapper.class);
     }
@@ -100,8 +100,8 @@ public class TagService implements BaseService<TagDTORequest, TagDTOResponse, Lo
 
 
     @Override
-    public List<TagDTOResponse> getTagsByNewsId(Long id){
-        List<TagModel> tags = tagRepository.getTagsByNewsId(id);
+    public List<TagDTOResponse> readByNewsId(Long id){
+        List<TagModel> tags = tagRepository.readByNewsId(id);
         return tags.stream()
                 .map(mapper::modelToDto)
                 .collect(Collectors.toList());

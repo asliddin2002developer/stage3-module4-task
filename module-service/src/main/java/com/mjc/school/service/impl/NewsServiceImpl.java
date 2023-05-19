@@ -1,10 +1,14 @@
 package com.mjc.school.service.impl;
 
-import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.AuthorRepository;
+import com.mjc.school.repository.CommentRepository;
+import com.mjc.school.repository.NewsRepository;
+import com.mjc.school.repository.TagRepository;
 import com.mjc.school.repository.model.impl.AuthorModel;
+import com.mjc.school.repository.model.impl.CommentModel;
 import com.mjc.school.repository.model.impl.NewsModel;
 import com.mjc.school.repository.model.impl.TagModel;
-import com.mjc.school.service.BaseService;
+import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.NewsDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsParamsRequest;
@@ -23,22 +27,22 @@ import java.util.stream.Collectors;
 import static com.mjc.school.service.enums.ConstantValidators.ENTITY_NOT_FOUND_MESSAGE;
 
 @Service
-public class NewsService implements BaseService<NewsDTORequest, NewsDTOResponse, Long> {
+public class NewsServiceImpl implements NewsService {
 
-    private final BaseRepository<NewsModel, Long> newsRepository;
-    private final BaseRepository<TagModel, Long> tagRepository;
-    private final BaseRepository<AuthorModel, Long> authorRepository;
+    private final NewsRepository newsRepository;
+    private final TagRepository tagRepository;
+    private final AuthorRepository authorRepository;
     private final NewsMapper mapper;
     private final NewsParamsMapper newsParamsMapper;
-    private String entityName = "News";
-    private String authorEntity = "Author";
+    private final String entityName = "News";
+    private final String authorEntity = "Author";
 
     @Autowired
-    public NewsService(BaseRepository<NewsModel, Long> newsRepository,
-                       BaseRepository<TagModel, Long> tagRepository,
-                       BaseRepository<AuthorModel, Long> authorRepository){
+    public NewsServiceImpl(NewsRepository newsRepository,
+                           TagRepository tagRepositoryImpl,
+                           AuthorRepository authorRepository){
         this.newsRepository = newsRepository;
-        this.tagRepository = tagRepository;
+        this.tagRepository = tagRepositoryImpl;
         this.authorRepository = authorRepository;
         this.newsParamsMapper = Mappers.getMapper(NewsParamsMapper.class);
         this.mapper = Mappers.getMapper(NewsMapper.class);
@@ -83,13 +87,16 @@ public class NewsService implements BaseService<NewsDTORequest, NewsDTOResponse,
 
             NewsModel newsModel = mapper.dtoToModel(createRequest);
             newsModel.setAuthor(authorModel);
-            Optional<TagModel> tag;
-            for ( Long id : tagIds ){
-                tag = tagRepository.readById(id);
-                if (tag.isPresent()) {
-                    newsModel.addTags(tag.get());
+
+            if (tagIds != null) {
+                //add tags to newsModel
+                for (Long id : tagIds) {
+                    var tag = tagRepository.readById(id);
+                    tag.ifPresent(newsModel::addTags);
                 }
             }
+
+
             newsRepository.create(newsModel);
             return mapper.modelToDto(newsModel);
     }
@@ -156,9 +163,11 @@ public class NewsService implements BaseService<NewsDTORequest, NewsDTOResponse,
         );
     }
 
+
     @Override
-    public List<NewsDTOResponse> getNewsByParams(NewsParamsRequest params) {
-        List<NewsModel> newsModels = newsRepository.getNewsByParams(newsParamsMapper.dtoToModel(params));
+    public List<NewsDTOResponse> readByQueryParams(NewsParamsRequest params) {
+        List<NewsModel> newsModels = newsRepository.readByQueryParams(newsParamsMapper.dtoToModel(params));
         return mapper.modelListToDtoList(newsModels);
     }
+
 }

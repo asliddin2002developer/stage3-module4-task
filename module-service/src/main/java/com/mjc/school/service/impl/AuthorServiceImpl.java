@@ -1,7 +1,9 @@
 package com.mjc.school.service.impl;
 
-import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.AuthorRepository;
+import com.mjc.school.repository.impl.AuthorRepositoryImpl;
 import com.mjc.school.repository.model.impl.AuthorModel;
+import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
@@ -17,26 +19,26 @@ import java.util.Optional;
 import static com.mjc.school.service.enums.ConstantValidators.ENTITY_NOT_FOUND_MESSAGE;
 
 @Service
-public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTOResponse, Long> {
-        private final BaseRepository<AuthorModel, Long> repository;
+public class AuthorServiceImpl implements AuthorService {
+        private final AuthorRepository authorRepository;
         private final AuthorMapper mapper;
         private final String entityName = "Author";
 
         @Autowired
-        public AuthorService(BaseRepository<AuthorModel, Long> repository){
-            this.repository = repository;
+        public AuthorServiceImpl(AuthorRepository authorRepository){
+            this.authorRepository = authorRepository;
             this.mapper = Mappers.getMapper(AuthorMapper.class);
         }
 
     @Override
     public List<AuthorDTOResponse> readAll(int page, int size, String sortBy) {
-        var authorList = repository.readAll(page, size, sortBy);
+        var authorList = authorRepository.readAll(page, size, sortBy);
         return mapper.modelListToDtoList(authorList);
     }
 
     @Override
     public AuthorDTOResponse readById(Long id) {
-        return repository.readById(id)
+        return authorRepository.readById(id)
                 .map(mapper::modelToDto)
                 .orElseThrow(
                         () -> new NotFoundException(
@@ -51,7 +53,7 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
     public AuthorDTOResponse create(AuthorDTORequest createRequest) {
         AuthorModel model = new AuthorModel();
         model.setName(createRequest.getName());
-        var created = repository.create(model);
+        var created = authorRepository.create(model);
         return mapper.modelToDto(created);
 
     }
@@ -59,10 +61,10 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
     @Override
     public AuthorDTOResponse update(AuthorDTORequest updateRequest) {
         long id = updateRequest.getId();
-        Optional<AuthorModel> authorModel = repository.readById(id);
+        Optional<AuthorModel> authorModel = authorRepository.readById(id);
         if (authorModel.isPresent()){
             authorModel.get().setName(updateRequest.getName());
-            AuthorModel update = repository.update(authorModel.get());
+            AuthorModel update = authorRepository.update(authorModel.get());
             return mapper.modelToDto(update);
         }
         throw new NotFoundException(
@@ -73,9 +75,9 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
     }
     @Override
     public boolean deleteById(Long id) {
-        var model = repository.readById(id);
+        var model = authorRepository.readById(id);
         if (model.isPresent()) {
-            return repository.deleteById(id);
+            return authorRepository.deleteById(id);
         }
         throw new NotFoundException(
                 String.format(
@@ -86,7 +88,7 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
 
     @Override
     public AuthorDTOResponse getReference(Long id) {
-        var reference = repository.readById(id);
+        var reference = authorRepository.readById(id);
         System.out.println(reference);
         if (reference.isPresent()) {
             return mapper.modelToDto(reference.get());
@@ -100,9 +102,9 @@ public class AuthorService implements BaseService<AuthorDTORequest, AuthorDTORes
 
 
     @Override
-    public AuthorDTOResponse getAuthorByNewsId(Long id) {
-        AuthorModel authorModel = repository.getAuthorByNewsId(id);
-        return mapper.modelToDto(authorModel);
+    public AuthorDTOResponse readByNewsId(Long id) {
+        Optional<AuthorModel> authorModel = authorRepository.readByNewsId(id);
+        return mapper.modelToDto(authorModel.get());
 
     }
 }
