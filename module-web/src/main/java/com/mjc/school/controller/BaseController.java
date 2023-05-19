@@ -3,8 +3,9 @@ package com.mjc.school.controller;
 import com.mjc.school.controller.annotations.CommandBody;
 import com.mjc.school.controller.annotations.CommandHandler;
 import com.mjc.school.controller.annotations.CommandParam;
-import com.mjc.school.service.dto.NewsParamsRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,29 +20,12 @@ public interface BaseController<T, R, K> {
     @CommandHandler
     ResponseEntity<R> create(@CommandBody T createRequest);
 
-    @CommandHandler
-    ResponseEntity<R> update(@CommandParam("id") K id, @CommandBody T updateRequest);
+    @PutMapping("/{id}")
+    ResponseEntity<R> update(@PathVariable K id,
+                             @RequestBody T updateRequest);
 
-    @CommandHandler
-    void deleteById(@CommandParam("id") K id);
-    @CommandHandler
-    default ResponseEntity<R> getAuthorByNewsId(@CommandParam("newsId") Long newsId){
-        // Default implementation that throws an UnsupportedOperationException
-        throw new UnsupportedOperationException("Method not implemented");
-    }
-    @CommandHandler
-    default ResponseEntity<List<R>> getTagsByNewsId(@CommandParam("newsId") Long newsId){
-        // Default implementation that throws an UnsupportedOperationException
-        throw new UnsupportedOperationException("Method not implemented");
-    }
-    @CommandHandler
-    default ResponseEntity<List<R>> getCommentsByNewsId(@CommandParam("newsId") Long newsId){
-        // Default implementation that throws an UnsupportedOperationException
-        throw new UnsupportedOperationException("Method not implemented");
-    }
-    @CommandHandler
-    default ResponseEntity<List<R>> getNewsByParams(@CommandBody NewsParamsRequest params) {
-        // Default implementation that throws an UnsupportedOperationException
-        throw new UnsupportedOperationException("Method not implemented");
-    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteById(@PathVariable Long id);
 }
