@@ -18,7 +18,7 @@ public class NewsDTORequest {
         private Long authorId;
         private Set<Long> tagIds;
 
-        public NewsDTORequest(String title, String content, Long authorId, Set<Long> tagIds, Set<Long> commentIds){
+        public NewsDTORequest(String title, String content, Long authorId, Set<Long> tagIds){
             this.title = title;
             this.content = content;
             this.authorId = authorId;

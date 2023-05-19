@@ -1,11 +1,9 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.AuthorRepository;
-import com.mjc.school.repository.CommentRepository;
 import com.mjc.school.repository.NewsRepository;
 import com.mjc.school.repository.TagRepository;
 import com.mjc.school.repository.model.impl.AuthorModel;
-import com.mjc.school.repository.model.impl.CommentModel;
 import com.mjc.school.repository.model.impl.NewsModel;
 import com.mjc.school.repository.model.impl.TagModel;
 import com.mjc.school.service.NewsService;

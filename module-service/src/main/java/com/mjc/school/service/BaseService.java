@@ -1,6 +1,5 @@
 package com.mjc.school.service;
 
-import com.mjc.school.service.dto.NewsParamsRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

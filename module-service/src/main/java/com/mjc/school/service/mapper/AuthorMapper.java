@@ -25,8 +25,9 @@ public interface AuthorMapper {
     @Mappings(value = {
             @Mapping(target = "createDate", ignore = true),
             @Mapping(target = "lastUpdateDate", ignore = true),
+            @Mapping(target = "news", ignore = true),
             @Mapping(target = "id", source = "id"),
-            @Mapping(target = "name", source = "name")
+            @Mapping(target = "name", source = "name"),
     })
     AuthorModel dtoToModel(AuthorDTORequest author);
 }

@@ -1,10 +1,8 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.AuthorRepository;
-import com.mjc.school.repository.impl.AuthorRepositoryImpl;
 import com.mjc.school.repository.model.impl.AuthorModel;
 import com.mjc.school.service.AuthorService;
-import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.AuthorDTORequest;
 import com.mjc.school.service.dto.AuthorDTOResponse;
 import com.mjc.school.service.exception.NotFoundException;

@@ -1,7 +1,6 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.CommentRepository;
-import com.mjc.school.repository.impl.CommentRepositoryImpl;
 import com.mjc.school.repository.model.impl.CommentModel;
 import com.mjc.school.service.CommentService;
 import com.mjc.school.service.dto.CommentDTORequest;
