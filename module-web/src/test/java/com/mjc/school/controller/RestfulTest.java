@@ -53,14 +53,15 @@ public class RestfulTest {
 
     @Test
     void whenFetchAll_givenAllNews_thenSuccess(){
-        get("/all-news")
+        get("/news")
                 .then()
                 .statusCode(200);
     }
 
     @Test
     void whenFetchOne_givenSingleNews_thenSuccess(){
-        get("news/1")
+        // news with given newsId should in the db
+        get("news/7")
                 .then()
                 .contentType(ContentType.JSON)
                 .statusCode(200);
@@ -70,7 +71,8 @@ public class RestfulTest {
     @Test
     void whenFetchDelete_givenId_thenNoContent(){
         given()
-            .pathParam("id", 1)
+                // news with given newsId should in the db
+            .pathParam("id", 7)
         .when()
             .delete("news/{id}")
         .then()
