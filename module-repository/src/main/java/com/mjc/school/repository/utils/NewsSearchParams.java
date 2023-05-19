@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Component
 @Scope("prototype")
-public class NewsParams {
+public class NewsSearchParams {
     String authorName;
     String title;
     String content;
