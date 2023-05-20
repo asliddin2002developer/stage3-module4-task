@@ -4,12 +4,12 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
-public class NotFoundExceptionPayload {
+public class ExceptionPayload {
     private final String msg;
     private final HttpStatus httpStatus;
     private final LocalDateTime dateTime;
 
-    public NotFoundExceptionPayload(String msg, HttpStatus httpStatus, LocalDateTime dateTime) {
+    public ExceptionPayload(String msg, HttpStatus httpStatus, LocalDateTime dateTime) {
         this.msg = msg;
         this.httpStatus = httpStatus;
         this.dateTime = dateTime;

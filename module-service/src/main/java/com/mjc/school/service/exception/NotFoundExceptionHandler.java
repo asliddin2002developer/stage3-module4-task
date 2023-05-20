@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 public class NotFoundExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handleNotFoundException(NotFoundException e){
-        NotFoundExceptionPayload notFoundExceptionPayload = new NotFoundExceptionPayload(
+        ExceptionPayload exceptionPayload = new ExceptionPayload(
                 e.getMessage(),
                 HttpStatus.NOT_FOUND,
                 LocalDateTime.now()
         );
 
-        return new ResponseEntity<>(notFoundExceptionPayload, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exceptionPayload, HttpStatus.NOT_FOUND);
     }
 }

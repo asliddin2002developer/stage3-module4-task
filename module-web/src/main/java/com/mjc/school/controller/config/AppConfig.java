@@ -1,4 +1,4 @@
-package com.mjc.school.config;
+package com.mjc.school.controller.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

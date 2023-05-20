@@ -1,6 +1,6 @@
 package com.mjc.school;
 
-import com.mjc.school.config.AppConfig;
+import com.mjc.school.controller.config.AppConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
