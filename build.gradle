@@ -13,33 +13,33 @@ subprojects {
     apply plugin: 'jacoco'
     group = 'com.mjc.school'
 
-    sourceCompatibility = 17
-    targetCompatibility = 17
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-web:3.0.3'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.7'
-        implementation 'org.postgresql:postgresql:42.6.0'
-        implementation 'com.tngtech.archunit:archunit:1.0.0'
+        implementation "org.springframework.boot:spring-boot-starter-web:$springBootStarterWebVersion"
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootStarterDataJpaVersion"
+        implementation "org.postgresql:postgresql:$postgresqlVersion"
+        implementation "com.tngtech.archunit:archunit:$archunitVersion"
 
-        testImplementation 'io.rest-assured:rest-assured:5.3.0'
-        testImplementation 'io.rest-assured:json-path:5.3.0'
-        testImplementation 'io.rest-assured:json-schema-validator:5.3.0'
+        testImplementation "io.rest-assured:rest-assured:$restAssuredVersion"
+        testImplementation "io.rest-assured:json-path:$restAssuredVersion"
+        testImplementation "io.rest-assured:json-schema-validator:$restAssuredVersion"
 
-        testImplementation "com.tngtech.archunit:archunit-junit5:1.0.0"
-        testImplementation 'org.assertj:assertj-core:3.24.2'
+        testImplementation "com.tngtech.archunit:archunit-junit5:$archunitVersion"
+        testImplementation "org.assertj:assertj-core:$assertJVersion"
 
-        compileOnly 'org.projectlombok:lombok:1.18.26'
-        annotationProcessor 'org.projectlombok:lombok:1.18.26'
+        compileOnly "org.projectlombok:lombok:$lombokVersion"
+        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-        testCompileOnly 'org.projectlombok:lombok:1.18.26'
-        testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+        testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+        testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-        testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.7'
+        testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootStarterDataJpaVersion"
 
 
 

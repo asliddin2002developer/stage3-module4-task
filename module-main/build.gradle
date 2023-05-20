@@ -1,5 +1,0 @@
-dependencies {
-    implementation project(path: ':module-web')
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
-
-}

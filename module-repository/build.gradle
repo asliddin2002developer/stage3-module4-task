@@ -10,8 +10,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'javax.validation:validation-api:1.1.0.Final'
-    testImplementation platform('org.junit:junit-bom:5.9.1')
+    implementation "javax.validation:validation-api:$javaxValidationVersion"
+    testImplementation platform("org.junit:junit-bom:$junitBomVersion")
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 

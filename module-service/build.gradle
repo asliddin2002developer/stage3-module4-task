@@ -11,10 +11,10 @@ repositories {
 
 dependencies {
     implementation project(path: ':module-repository')
-    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation platform("org.junit:junit-bom:$junitBomVersion")
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
 }
 
 test {
